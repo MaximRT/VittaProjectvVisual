@@ -1,4 +1,5 @@
 using API.DTOs;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -15,12 +16,18 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginDto loginDto )
+        [HttpPost("register")]
+        public async Task <IActionResult> Register(UserService userService, RegisterDto registerDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Login == loginDto.Login);
+            await userService.Register(registerDto.Name, registerDto.Login);
 
-            if (user == null) return Unauthorized();
+            return Ok();
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(UserService userService, LoginDto loginDto)
+        {
+            var token = await userService.Login(loginDto.Name, loginDto.Login);
 
             return Ok();
         }

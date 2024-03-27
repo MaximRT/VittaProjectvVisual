@@ -3,15 +3,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories
 {
-    public class CoursesRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly DataContext _context;
-        public CoursesRepository(DataContext context)
+        public UsersRepository(DataContext context)
         {
             _context = context;
         }
 
-        public async Task<User> GetUserByLogin(string login)
+        public async Task CreateAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+            await SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByLoginAsync(string login)
         {
             var user = await _context.Users
                 .AsNoTracking()
@@ -22,18 +28,23 @@ namespace Persistence.Repositories
             return new User();
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<List<User>> GetUsersAsync()
         {
             return await _context.Users.AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<User>> GetByPage(int page, int pageSize)
+        public async Task<List<User>> GetByPageAsync(int page, int pageSize)
         {
             return await _context.Users
                 .AsNoTracking()
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
