@@ -1,6 +1,6 @@
 using Domain;
 
-namespace Persistence
+namespace Application
 {
     public interface IUsersRepository
     {

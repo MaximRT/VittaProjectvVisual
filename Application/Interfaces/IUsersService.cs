@@ -1,4 +1,4 @@
-namespace Persistence.Interfaces
+namespace Application.Interfaces
 {
     public interface IUsersService
     {

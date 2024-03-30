@@ -1,6 +1,6 @@
 using Domain;
 
-namespace Persistence.Interfaces
+namespace Application.Interfaces
 {
     public interface IJwtProvider
     {

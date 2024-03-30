@@ -1,10 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Application.Interfaces;
 using Domain;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Persistence.Interfaces;
 
 namespace Infrastructure
 {
@@ -19,8 +19,9 @@ namespace Infrastructure
         public string GenerateToken(User user)
         {
             List<Claim> claims = new List<Claim>()
-            { 
-                new Claim(ClaimTypes.Email, user.Login)
+            {
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Login", user.Login)
             };
 
             var signingCredentials = new SigningCredentials(

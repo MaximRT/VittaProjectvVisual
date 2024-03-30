@@ -2,12 +2,17 @@ using Application.Services;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using Persistence.Interfaces;
 using Persistence.Repositories;
+using Application;
+using Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+
+builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,7 +23,15 @@ builder.Services.AddDbContext<DataContext>(opt =>
 
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IUsersService, UserService>();
+builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+builder.Services.AddScoped<IOrdersService, OrderService>();
+builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+builder.Services.AddScoped<IProductsService, ProductService>();
+
+
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -30,6 +43,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

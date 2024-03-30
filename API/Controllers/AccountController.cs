@@ -1,8 +1,7 @@
 using API.DTOs;
-using Application.Services;
+using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace API.Controllers
 {
@@ -10,26 +9,30 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly DataContext _context;
-        public AccountController(DataContext context)
+        private readonly IUsersService _usersService;
+        public AccountController(IUsersService usersService)
         {
-            _context = context;
+            _usersService = usersService;
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("register")]
-        public async Task <IActionResult> Register(UserService userService, RegisterDto registerDto)
+        public async Task <IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            await userService.Register(registerDto.Name, registerDto.Login);
+            await _usersService.Register(registerDto.Name, registerDto.Login);
 
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult> Login(UserService userService, LoginDto loginDto)
+        public async Task<ActionResult> Login(LoginDto  loginDto)
         {
-            var token = await userService.Login(loginDto.Name, loginDto.Login);
+            var token = await _usersService.Login(loginDto.Name, loginDto.Login);
 
-            return Ok();
+            Response.Cookies.Append("test-cookies", token);
+
+            return Ok(token);
         }
     }
 }

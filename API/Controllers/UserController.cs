@@ -1,7 +1,5 @@
-using API.DTOs;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
 
 namespace API.Controllers
 {
@@ -9,6 +7,17 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        
+        private readonly IUsersService _usersService;
+        public UserController(IUsersService usersService)
+        {
+            _usersService = usersService;
+        }
+
+        [HttpPost("getUser")]
+        public async Task<IActionResult> Login(string id)
+        {
+            
+            return Ok("Hello");
+        }
     }
 }

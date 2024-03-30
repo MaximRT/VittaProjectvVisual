@@ -1,6 +1,7 @@
-using Domain;
+using Application;
+using Application.DTOs;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Persistence;
 
 namespace API.Controllers
 {
@@ -8,33 +9,27 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly DataContext _context;
-        public OrderController(DataContext context)
+        private readonly IUsersRepository _usersRepository;
+        private readonly IOrdersService _ordersService;
+        private readonly IProductsService _productsService;
+        public OrderController(IUsersRepository usersRepository, IOrdersService ordersService, IProductsService productsService)
         {
-            _context = context;
+            _productsService = productsService;
+            _ordersService = ordersService;
+            _usersRepository = usersRepository;
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult> CreateOrder(string userLogin, List<Product> products)
+        public async Task<ActionResult> CreateOrder( [FromBody] OrderDto orderDto)
         {
+            var user = await _usersRepository.GetUserByLoginAsync(orderDto.UserLogin);
 
+            var orderId = await _ordersService.CreateAsync(user.Id, orderDto.Price, DateTime.UtcNow);
 
-            var order = new Order
-            {
-                DateCreation = DateTime.Now,
-                Price = 3000,
-            };
+            var productsIds = await _productsService.GetListIdProducts(orderDto.Products);
 
-
-
-
-            await _context.Orders.AddAsync(order);
             
-            var result = await _context.SaveChangesAsync() > 0;
-
-            if (result) return Ok();
-
-            return BadRequest();
+            return Ok(orderId);
         }
     }
 }
