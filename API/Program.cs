@@ -27,6 +27,8 @@ builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<IOrdersService, OrderService>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 builder.Services.AddScoped<IProductsService, ProductService>();
+builder.Services.AddScoped<IOrderPositionsRepository, OrderPositionsRepository>();
+builder.Services.AddScoped<IOrderPositionService, OrderPositionService>();
 
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();

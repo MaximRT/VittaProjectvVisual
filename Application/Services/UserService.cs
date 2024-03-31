@@ -13,6 +13,11 @@ namespace Application.Services
             _usersRepository = usersRepository;
         }
 
+        public async Task<User> GetUserByLogin(string login)
+        {
+            return await _usersRepository.GetUserByLoginAsync(login);
+        }
+
         public async Task<string> Login(string name, string login)
         {
             var user = await _usersRepository.GetUserByLoginAsync(login);

@@ -13,8 +13,8 @@ namespace API.Controllers
             _usersService = usersService;
         }
 
-        [HttpPost("getUser")]
-        public async Task<IActionResult> Login(string id)
+        [HttpPost("listOrders")]
+        public async Task<IActionResult> GetListOrdersById(string login)
         {
             
             return Ok("Hello");

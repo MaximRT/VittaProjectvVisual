@@ -11,7 +11,7 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Guid> Add(DateTime dateCreation, decimal price, Guid userId)
+        public async Task<Guid> CreateOrderAsync(DateTime dateCreation, decimal price, Guid userId)
         {
             var orderId = Guid.NewGuid();
 

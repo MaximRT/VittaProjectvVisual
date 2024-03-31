@@ -2,6 +2,6 @@ namespace Application.Interfaces
 {
     public interface IOrdersService
     {
-        Task<Guid> CreateAsync(Guid userId, decimal price, DateTime dateCreation);
+        Task<Guid> CreateOrderAsync(Guid userId, decimal price, DateTime dateCreation);
     }
 }

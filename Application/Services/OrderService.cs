@@ -11,9 +11,9 @@ namespace Application.Services
         }
 
 
-        public async Task<Guid> CreateAsync(Guid userId, decimal price, DateTime dateCreation)
+        public async Task<Guid> CreateOrderAsync(Guid userId, decimal price, DateTime dateCreation)
         {
-            return await _ordersRepository.Add(dateCreation, price, userId);
+            return await _ordersRepository.CreateOrderAsync(dateCreation, price, userId);
         }
     }
 }

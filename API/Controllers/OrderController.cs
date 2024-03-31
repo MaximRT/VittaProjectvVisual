@@ -12,22 +12,32 @@ namespace API.Controllers
         private readonly IUsersRepository _usersRepository;
         private readonly IOrdersService _ordersService;
         private readonly IProductsService _productsService;
-        public OrderController(IUsersRepository usersRepository, IOrdersService ordersService, IProductsService productsService)
+        private readonly IOrderPositionService _orderPositionService;
+
+        public OrderController(IUsersRepository usersRepository,
+                               IOrdersService ordersService, 
+                               IProductsService productsService,
+                               IOrderPositionService orderPositionService
+                               )
         {
             _productsService = productsService;
             _ordersService = ordersService;
             _usersRepository = usersRepository;
+            _orderPositionService = orderPositionService;
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult> CreateOrder( [FromBody] OrderDto orderDto)
+        public async Task<ActionResult> CreateOrder([FromBody] OrderDto orderDto)
         {
             var user = await _usersRepository.GetUserByLoginAsync(orderDto.UserLogin);
 
-            var orderId = await _ordersService.CreateAsync(user.Id, orderDto.Price, DateTime.UtcNow);
+            var orderId = await _ordersService.CreateOrderAsync(user.Id, orderDto.Price, DateTime.UtcNow);
 
-            var productsIds = await _productsService.GetListIdProducts(orderDto.Products);
+            var productsIds = await _productsService.GetListIdProductsAsync(orderDto.Products);
 
+            await _orderPositionService.AddOrderPositionsAsync(orderId, productsIds);
+
+            await _productsService.UpdateCountProductsAsync(productsIds);
             
             return Ok(orderId);
         }

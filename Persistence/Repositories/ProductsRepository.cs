@@ -13,7 +13,18 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<ProductIdDto>> GetListProductsIdByName(List<ProductDto> products)
+        public async Task<List<ProductToUserDto>> GetListProductsAsync()
+        {
+            return await _context.Products.Select(x => 
+                new ProductToUserDto 
+                { 
+                    Name = x.Name,
+                    Count = x.Count,
+                    Price = x.Price
+                })
+                .ToListAsync();
+        }
+        public async Task<List<ProductIdDto>> GetListProductsIdByNameAsync(List<ProductNameDto> products)
         {
             List<ProductIdDto> productIds = new List<ProductIdDto>();
 
@@ -24,6 +35,28 @@ namespace Persistence.Repositories
             }
 
             return productIds;
+        }
+
+        public async Task UpdateCountProductsAsync(List<ProductIdDto> products)
+        {
+            var productIdToUpdate = products.Select(x => x.Id);
+
+            var productsToUpdateOld = await _context.Products
+                .Where(p => productIdToUpdate.Contains(p.Id)).ToListAsync();
+
+            for (int i = 0; i < productIdToUpdate.Count(); i++)
+            {
+                var newValueCount = productsToUpdateOld[i].Count - products[i].Count;
+
+                productsToUpdateOld[i].Count = newValueCount;
+            }
+
+            await SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

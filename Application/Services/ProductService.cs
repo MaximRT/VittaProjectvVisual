@@ -12,9 +12,19 @@ namespace Application.Services
             _productsRepository = productsRepository;
         }
 
-        public Task<List<ProductIdDto>> GetListIdProducts(List<ProductDto> products)
+        public async Task<List<ProductToUserDto>> GetListProductsAsync()
         {
-            return _productsRepository.GetListProductsIdByName(products);
+            return await _productsRepository.GetListProductsAsync();
+        }
+
+        public async Task<List<ProductIdDto>> GetListIdProductsAsync(List<ProductNameDto> products)
+        {
+            return await _productsRepository.GetListProductsIdByNameAsync(products);
+        }
+
+        public async Task UpdateCountProductsAsync(List<ProductIdDto> products)
+        {
+            await _productsRepository.UpdateCountProductsAsync(products);
         }
     }
 }
