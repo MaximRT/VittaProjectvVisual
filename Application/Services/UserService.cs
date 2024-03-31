@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Interfaces;
 using Domain;
 
@@ -13,7 +14,14 @@ namespace Application.Services
             _usersRepository = usersRepository;
         }
 
-        public async Task<User> GetUserByLogin(string login)
+        public async Task<List<ListUserOrdersDto>> GetListUserOrdersAsync(string login)
+        {
+            var user = await _usersRepository.GetUserByLoginAsync(login);
+
+            return await _usersRepository.GetListUserOrdersAsync(user.Id);
+        }
+
+        public async Task<User> GetUserByLoginAsync(string login)
         {
             return await _usersRepository.GetUserByLoginAsync(login);
         }
