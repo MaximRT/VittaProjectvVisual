@@ -14,11 +14,9 @@ namespace Application.Services
             _usersRepository = usersRepository;
         }
 
-        public async Task<List<ListUserOrdersDto>> GetListUserOrdersAsync(string login)
+        public async Task<List<ListUserOrdersDto>> GetListUserOrdersAsync(Guid userId)
         {
-            var user = await _usersRepository.GetUserByLoginAsync(login);
-
-            return await _usersRepository.GetListUserOrdersAsync(user.Id);
+            return await _usersRepository.GetListUserOrdersAsync(userId);
         }
 
         public async Task<User> GetUserByLoginAsync(string login)
@@ -26,16 +24,16 @@ namespace Application.Services
             return await _usersRepository.GetUserByLoginAsync(login);
         }
 
-        public async Task<string> Login(string name, string login)
+        /*
+        public async Task<string> Login(string login)
         {
             var user = await _usersRepository.GetUserByLoginAsync(login);
 
-            if (user.Login == null) return "The user was not found";
+            if (user.Login == null) return null;
 
-            var token = _jwtProvider.GenerateToken(user);
-
-            return token;
+            return user.Id.ToString();
         }
+        */
 
         public async Task Register(string name, string login)
         {

@@ -13,10 +13,10 @@ namespace API.Controllers
             _usersService = usersService;
         }
 
-        [HttpGet("listOrders/{login}")]
-        public async Task<IActionResult> GetListOrdersById(string login)
+        [HttpGet("listOrders/{id}")]
+        public async Task<IActionResult> GetListOrdersById(Guid id)
         {
-            return Ok(await _usersService.GetListUserOrdersAsync(login));
+            return Ok(await _usersService.GetListUserOrdersAsync(id));
         }
     }
 }

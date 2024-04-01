@@ -1,0 +1,16 @@
+﻿<Window x:Class="client_app.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:client_app"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="LoginWindow" Height="200" Width="300" MaxHeight="200" MaxWidth="300">
+    <Grid>
+        <Button x:Name="loginButton" Content="Вход" HorizontalAlignment="Left" Margin="81,108,0,0" VerticalAlignment="Top" Height="37" Width="165" Click="LoginUserClick"/>
+        <TextBox x:Name="loginTextBox" HorizontalAlignment="Left" Margin="81,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165"/>
+        <Label Content="Введите логин для входа" HorizontalAlignment="Left" Margin="81,37,0,0" VerticalAlignment="Top" Width="165"/>
+    </Grid>
+</Window>

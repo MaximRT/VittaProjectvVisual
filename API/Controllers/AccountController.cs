@@ -15,7 +15,6 @@ namespace API.Controllers
             _usersService = usersService;
         }
         
-        [AllowAnonymous]
         [HttpPost("register")]
         public async Task <IActionResult> Register([FromBody] RegisterDto registerDto)
         {
@@ -23,16 +22,15 @@ namespace API.Controllers
 
             return Ok();
         }
-
-        [AllowAnonymous]
+        
         [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginDto  loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-            var token = await _usersService.Login(loginDto.Name, loginDto.Login);
+            var user = await _usersService.GetUserByLoginAsync(login.Login);
 
-            Response.Cookies.Append("test-cookies", token);
+            if (user.Name == null) return BadRequest("Пользователь не найден");
 
-            return Ok(token);
+            return Ok(user.Id);
         }
     }
 }
