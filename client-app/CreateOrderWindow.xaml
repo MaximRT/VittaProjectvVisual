@@ -18,7 +18,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" MinWidth="200"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" IsReadOnly="True" MinWidth="100"/>
-                <DataGridTextColumn Header="Count" Binding="{Binding Count}" IsReadOnly="False" MinWidth="50"/>
+                <DataGridTextColumn Header="Count" Binding="{Binding Count}" IsReadOnly="False" MinWidth="70"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Назад" HorizontalAlignment="Left" Margin="30,375,0,0" VerticalAlignment="Top" Height="31" Width="140" Click="BackToMainWindow"/>

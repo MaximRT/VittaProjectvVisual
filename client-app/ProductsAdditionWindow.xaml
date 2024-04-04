@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:client_app"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Список товаров" Height="450" Width="350" MaxHeight="450" MaxWidth="350" ResizeMode="NoResize">
+        Title="Список товаров" Height="450" Width="370" MaxHeight="450" MaxWidth="370" ResizeMode="NoResize">
     <Grid Loaded="Grid_Loaded">
 
         <DataGrid x:Name="dataGridProduct"   AutoGenerateColumns="False" Margin="0,0,0,64">
