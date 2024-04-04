@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace client_app.OrderSection
 {
+    /// <summary>
+    /// Сервис взаимодействия с областью Order через API
+    /// </summary>
     internal class OrderService : IOrderService
     {
         private readonly HttpClient _httpClient;
@@ -18,6 +21,13 @@ namespace client_app.OrderSection
             _httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Создание заказа через API
+        /// </summary>
+        /// <param name="userId"> Идентификатор пользователя </param>
+        /// <param name="price"> Цена </param>
+        /// <param name="products"> Список товаров </param>
+        /// <returns></returns>
         public async Task CreateOrder(string userId, decimal price, List<ProductNameDto> products)
         {
             try

@@ -29,11 +29,21 @@ namespace client_app
             dataGridProduct.ItemsSource = _listProducts;
         }
 
+        /// <summary>
+        /// Закрытие формы при возврате в окно создания заказа
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private void BackToCreateOrderWindow(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Отображение списка товаров
+        /// </summary>
+        /// <param name="sender"> DataGrid </param>
+        /// <param name="e"> Загрузка формы </param>
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             var listProducts = await _productService.GetListProducts();
@@ -44,6 +54,12 @@ namespace client_app
             }
         }
 
+        /// <summary>
+        /// Добавление выделенной строки с товаром из окна ProductsAddition 
+        /// в DataGrid товаров в заказе расположенной в CreateOrderWindow
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private void AddProductToOrder(object sender, RoutedEventArgs e)
         {
             if (dataGridProduct.SelectedItem is ProductToUserDto selectedProduct)
@@ -74,6 +90,12 @@ namespace client_app
             }
         }
 
+        /// <summary>
+        /// Получение объекта ProductsAdditionWindow, чтобы окно можно было открыть только один раз
+        /// </summary>
+        /// <param name="userId"> Идентификатор пользователя </param>
+        /// <param name="productsInOrder"> Список товаров в заказе </param>
+        /// <returns> Объект ProductsAdditionWindow </returns>
         public static ProductsAdditionWindow GetInstance(string userId, ObservableCollection<ProductToUserDto> productsInOrder)
         {
             if (instance == null || instance.IsClosed)
@@ -84,6 +106,9 @@ namespace client_app
             return instance;
         }
 
+        /// <summary>
+        /// Проверка статуса окна
+        /// </summary>
         private bool IsClosed
         {
             get { return !IsLoaded || !IsVisible; }

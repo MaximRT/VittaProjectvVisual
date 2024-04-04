@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Контроллер отвечающий за функционал связанный с товарами в системе
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
@@ -13,7 +16,11 @@ namespace API.Controllers
         {
             _productsService = productsService;
         }
-
+        
+        /// <summary>
+        /// Конечная точка отвечающая за фунционал получения списка продуктов
+        /// </summary>
+        /// <returns> Список с информацией о продуктах  </returns>
         [HttpGet("list")]
         public async Task<IActionResult> GetListProducts()
         {

@@ -8,7 +8,9 @@ using System.Windows;
 
 namespace client_app.LoginSection.UserAccountService
 {
-
+    /// <summary>
+    /// Сервис взаимодействия с областью аккаунта пользователя
+    /// </summary>
     public class UserAccount : IUserAccount
     {
         private readonly HttpClient _httpClient;
@@ -17,6 +19,11 @@ namespace client_app.LoginSection.UserAccountService
             _httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Вход пользователя в систему через API
+        /// </summary>
+        /// <param name="login"> email </param>
+        /// <returns> Идентификатор пользователя </returns>
         public async Task<string> LoginAsync(string login)
         {
             try

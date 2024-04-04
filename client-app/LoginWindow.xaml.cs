@@ -3,6 +3,9 @@ using System.Windows;
 
 namespace client_app
 {
+    /// <summary>
+    /// Логика взаимодействия для LoginWindow.xaml
+    /// </summary>
     public partial class LoginWindow : Window
     {
         private IUserAccount _userAccount;
@@ -13,6 +16,11 @@ namespace client_app
             _userAccount = new UserAccount();
         }
 
+        /// <summary>
+        /// Отправка логина пользователя для входа в систему
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private async void LoginUserClick(object sender, RoutedEventArgs e)
         {
             string userLogin = null;
@@ -40,6 +48,11 @@ namespace client_app
             
         }
 
+        /// <summary>
+        /// Валидация логина пользователя
+        /// </summary>
+        /// <param name="input"> Логин </param>
+        /// <returns> True или False </returns>
         private bool ValidateInputString(string input)
         {
             return string.IsNullOrEmpty(input) || input.Trim() == "" ? false : true;

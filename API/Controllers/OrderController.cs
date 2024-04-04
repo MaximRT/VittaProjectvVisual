@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Контроллер отвечающий за функционал связанный с заказами
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
@@ -24,6 +27,11 @@ namespace API.Controllers
             _orderPositionService = orderPositionService;
         }
 
+        /// <summary>
+        /// Конечная точка отвечающая за фунционал создания заказа 
+        /// </summary>
+        /// <param name="orderDto"> Данные необходимые для создания заказа </param>
+        /// <returns> Статус код выполнения запроса </returns>
         [HttpPost("create")]
         public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto)
         {

@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories
 {
+    /// <summary>
+    /// Репозиторий для работы с сущностью Users
+    /// </summary>
     public class UsersRepository : IUsersRepository
     {
         private readonly DataContext _context;
@@ -13,6 +16,11 @@ namespace Persistence.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// Получение списка заказов пользователя
+        /// </summary>
+        /// <param name="id"> Идентификатор пользователя </param>
+        /// <returns> Список заказов пользователя </returns>
         public async Task<List<ListUserOrdersDto>> GetListUserOrdersAsync(Guid id)
         {
             return await _context.Orders.Where(x => x.UserId == id)
@@ -25,6 +33,11 @@ namespace Persistence.Repositories
                 .ToListAsync();
         }
 
+        /// <summary>
+        /// Получение пользователя
+        /// </summary>
+        /// <param name="login"> Электронная почта </param>
+        /// <returns> Пользователь </returns>
         public async Task<User> GetUserByLoginAsync(string login)
         {
             var user = await _context.Users
@@ -36,6 +49,10 @@ namespace Persistence.Repositories
             return new User();
         }
         
+        /// <summary>
+        /// Сохранение изменений в базе данных
+        /// </summary>
+        /// <returns> Результат выполнения задачи </returns>
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

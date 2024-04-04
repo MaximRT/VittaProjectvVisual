@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace client_app.UserSection
 {
+    /// <summary>
+    /// Сервис взаимодействия с областью User
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
@@ -17,6 +20,11 @@ namespace client_app.UserSection
             _httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Получения списка заказов по индентификатору пользователя из API
+        /// </summary>
+        /// <param name="id"> Индентификатор </param>
+        /// <returns> Списка заказов </returns>
         public async Task<List<ListUserOrdersDto>> GetUserOrdersListByIdAsync(string id)
         {
             try

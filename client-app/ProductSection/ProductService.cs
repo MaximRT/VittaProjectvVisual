@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace client_app.ProductSection
 {
+    /// <summary>
+    /// Сервис взаимодействия с областью Product
+    /// </summary>
     class ProductService : IProductService
     {
         private readonly HttpClient _httpClient;
@@ -17,6 +20,10 @@ namespace client_app.ProductSection
             _httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Получение списка товаров из API
+        /// </summary>
+        /// <returns> Список товаров </returns>
         public async Task<List<ProductToUserDto>> GetListProducts()
         {
             try

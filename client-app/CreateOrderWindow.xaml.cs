@@ -27,6 +27,11 @@ namespace client_app
             _orderService = new OrderService();
         }
 
+        /// <summary>
+        /// Закрытие окон создания заказа и добавления товаров
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private void BackToMainWindow(object sender, RoutedEventArgs e)
         {
             ProductsAdditionWindow.GetInstance(_userId, _products).Close();
@@ -38,11 +43,21 @@ namespace client_app
             window.Show();
         }
 
+        /// <summary>
+        /// Открытие окна добавление товаров
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private void MoveToProductsAdditionWindow(object sender, RoutedEventArgs e)
         {
             ProductsAdditionWindow.GetInstance(_userId, _products).Show();
         }
 
+        /// <summary>
+        /// Создание заказа в базе данных
+        /// </summary>
+        /// <param name="sender"> Кнопка </param>
+        /// <param name="e"> Нажатие </param>
         private async void CreateOrder(object sender, RoutedEventArgs e)
         {
             decimal priceOrder = 0;
@@ -81,6 +96,11 @@ namespace client_app
             }
         }
 
+        /// <summary>
+        /// Удаление товара из заказа
+        /// </summary>
+        /// <param name="sender"> Строка с товаров в DataGrid </param>
+        /// <param name="e"> Нажатие правой кнопкой мыши и последующий выбор пункта "Удалить" в контекстном меню </param>
         private void Row_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Right)

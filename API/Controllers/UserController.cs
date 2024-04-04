@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    /// <summary>
+    /// Контроллер отвечающий за функционал связанный с пользователями
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -13,6 +16,11 @@ namespace API.Controllers
             _usersService = usersService;
         }
 
+        /// <summary>
+        /// Конечная точка отвечающая за фунционал получения списка заказов пользователя
+        /// </summary>
+        /// <param name="id"> Идентификатор пользователя </param>
+        /// <returns> Список заказов пользователя </returns>
         [HttpGet("listOrders/{id}")]
         public async Task<IActionResult> GetListOrdersById(Guid id)
         {

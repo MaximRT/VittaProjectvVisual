@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories
 {
+    /// <summary>
+    /// Репозиторий для работы с сущностью Product
+    /// </summary>
     public class ProductsRepository : IProductsRepository
     {
         private readonly DataContext _context;
@@ -13,6 +16,10 @@ namespace Persistence.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// Получение списка товаров
+        /// </summary>
+        /// <returns> Список товаров </returns>
         public async Task<List<ProductToUserDto>> GetListProductsAsync()
         {
             return await _context.Products.Select(x => 
@@ -24,6 +31,12 @@ namespace Persistence.Repositories
                 })
                 .ToListAsync();
         }
+
+        /// <summary>
+        /// Получение списка идентификаторов товаров по их названиям
+        /// </summary>
+        /// <param name="products"> Список названий товаров </param>
+        /// <returns> Список идентификаторов товаров </returns>
         public async Task<List<ProductIdDto>> GetListProductsIdByNameAsync(List<ProductNameDto> products)
         {
             List<ProductIdDto> productIds = new List<ProductIdDto>();
@@ -37,6 +50,11 @@ namespace Persistence.Repositories
             return productIds;
         }
 
+        /// <summary>
+        /// Обновление количества товаров
+        /// </summary>
+        /// <param name="products"> Список идентификаторов товаров </param>
+        /// <returns> Результат выполнения задачи </returns>
         public async Task UpdateCountProductsAsync(List<ProductIdDto> products)
         {
             var productIdToUpdate = products.Select(x => x.Id);
@@ -54,6 +72,10 @@ namespace Persistence.Repositories
             await SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Сохранение изменений в базе данных
+        /// </summary>
+        /// <returns> Результат выполнения задачи </returns>
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

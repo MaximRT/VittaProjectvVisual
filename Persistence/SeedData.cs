@@ -2,6 +2,9 @@ using Domain;
 
 namespace Persistence
 {
+    /// <summary>
+    /// Класс заполнения начальными значениями базы данных
+    /// </summary>
     public class SeedData
     {
         public static async Task Seed(DataContext context)
