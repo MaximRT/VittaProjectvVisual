@@ -5,9 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:client_app"
         mc:Ignorable="d"
-        Title="CreateOrderWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Назад" HorizontalAlignment="Left" Margin="10,388,0,0" VerticalAlignment="Top" Height="36" Width="140" Click="BackToMainWindow"/>
-
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="CreateOrderWindow" Height="450" Width="600">
+    <Grid >
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="False" Margin="0,0,0,64">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseRightButtonDown" Handler="Row_MouseRightButtonDown"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True" MinWidth="200"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" IsReadOnly="True" MinWidth="100"/>
+                <DataGridTextColumn Header="Count" Binding="{Binding Count}" IsReadOnly="False" MinWidth="50"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Назад" HorizontalAlignment="Left" Margin="30,375,0,0" VerticalAlignment="Top" Height="31" Width="140" Click="BackToMainWindow"/>
+        <Button Content="Добавить товар" HorizontalAlignment="Left" Margin="421,375,0,0" VerticalAlignment="Top" Height="31" Width="140" Click="MoveToProductsAdditionWindow"/>
+        <Button Content="Создать заказ" HorizontalAlignment="Left" Margin="217,375,0,0" VerticalAlignment="Top" Height="31" Width="140" Click="CreateOrder"/>
     </Grid>
 </Window>

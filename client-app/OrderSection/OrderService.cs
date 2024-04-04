@@ -1,51 +1,49 @@
 ﻿using client_app.DTOs;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace client_app.LoginSection.UserAccountService
+namespace client_app.OrderSection
 {
-
-    public class UserAccount : IUserAccount
+    internal class OrderService : IOrderService
     {
         private readonly HttpClient _httpClient;
-        public UserAccount()
+
+        public OrderService()
         {
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> LoginAsync(string login)
+        public async Task CreateOrder(string userId, decimal price, List<ProductNameDto> products)
         {
             try
             {
-                string url = "http://localhost:5117/api/account/login";
+                string url = "http://localhost:5117/api/order/create";
 
-                var postData = JsonConvert.SerializeObject(new LoginDto { Login = login });
+                var postData = JsonConvert.SerializeObject(new OrderDto { UserId = userId, Price = price, Products = products });
 
                 HttpContent content = new StringContent(postData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync(url, content);
-
+                
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseData = await response.Content.ReadAsStringAsync();
-
-                    return responseData.Substring(1, responseData.Length - 2);
+                    MessageBox.Show($"Заказ успешно создан");
                 }
                 else
                 {
                     MessageBox.Show($"Запрос завершился неудачей - {response.StatusCode}");
-                    return null;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Во время отправки запроса произошла ошибка{ex.Message} ");
-                return null;
             }
         }
     }
 }
+

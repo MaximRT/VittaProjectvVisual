@@ -1,4 +1,3 @@
-using Application;
 using Application.DTOs;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -9,29 +8,26 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IUsersRepository _usersRepository;
         private readonly IOrdersService _ordersService;
         private readonly IProductsService _productsService;
         private readonly IOrderPositionService _orderPositionService;
 
-        public OrderController(IUsersRepository usersRepository,
-                               IOrdersService ordersService, 
-                               IProductsService productsService,
-                               IOrderPositionService orderPositionService
-                               )
+        public OrderController
+        (
+            IOrdersService ordersService, 
+            IProductsService productsService,
+            IOrderPositionService orderPositionService
+        )
         {
             _productsService = productsService;
             _ordersService = ordersService;
-            _usersRepository = usersRepository;
             _orderPositionService = orderPositionService;
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult> CreateOrder([FromBody] OrderDto orderDto)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderDto orderDto)
         {
-            var user = await _usersRepository.GetUserByLoginAsync(orderDto.UserLogin);
-
-            var orderId = await _ordersService.CreateOrderAsync(user.Id, orderDto.Price, DateTime.UtcNow);
+            var orderId = await _ordersService.CreateOrderAsync(Guid.Parse(orderDto.UserId), orderDto.Price, DateTime.UtcNow);
 
             var productsIds = await _productsService.GetListIdProductsAsync(orderDto.Products);
 
@@ -39,7 +35,7 @@ namespace API.Controllers
 
             await _productsService.UpdateCountProductsAsync(productsIds);
             
-            return Ok(orderId);
+            return Ok();
         }
     }
 }

@@ -1,5 +1,4 @@
 using Application.Services;
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Repositories;
@@ -7,9 +6,7 @@ using Application;
 using Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
 
-builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
 builder.Services.AddControllers();
 
@@ -30,8 +27,6 @@ builder.Services.AddScoped<IProductsService, ProductService>();
 builder.Services.AddScoped<IOrderPositionsRepository, OrderPositionsRepository>();
 builder.Services.AddScoped<IOrderPositionService, OrderPositionService>();
 
-
-builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 
 builder.Services.AddHttpContextAccessor();
 

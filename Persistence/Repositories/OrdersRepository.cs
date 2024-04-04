@@ -16,9 +16,14 @@ namespace Persistence.Repositories
             var orderId = Guid.NewGuid();
 
             await _context.Orders.AddAsync(new Order{Id = orderId, DateCreation = dateCreation, Price = price, UserId = userId});
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
             
             return orderId;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

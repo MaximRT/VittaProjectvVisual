@@ -1,6 +1,8 @@
-namespace Application.DTOs
+﻿using System.Collections.Generic;
+
+namespace client_app.DTOs
 {
-    public class OrderDto
+    internal class OrderDto
     {
         public string UserId { get; set; }
         public decimal Price { get; set; }

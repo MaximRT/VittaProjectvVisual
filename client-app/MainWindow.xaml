@@ -10,7 +10,7 @@
         Title="MainWindow" Height="490" Width="420" MaxHeight="490" MaxWidth="420">
     <Grid Loaded="Grid_Loaded">
         <Button Content="Назад" HorizontalAlignment="Left" Margin="22,415,0,0" VerticalAlignment="Top" Height="29" Width="144" Click="BackToLoginWindow"/>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" Margin="0,0,0,64" />
+        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True" IsReadOnly="True" Margin="0,0,0,64" />
         <Button Content="Новый заказ" HorizontalAlignment="Left" Margin="252,415,0,0" VerticalAlignment="Top" Height="29" Width="144" Click="MoveToCreateOrderWindow"/>
     </Grid>
 </Window>

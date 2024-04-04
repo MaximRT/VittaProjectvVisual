@@ -13,12 +13,6 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task CreateAsync(User user)
-        {
-            await _context.Users.AddAsync(user);
-            await SaveChangesAsync();
-        }
-
         public async Task<List<ListUserOrdersDto>> GetListUserOrdersAsync(Guid id)
         {
             return await _context.Orders.Where(x => x.UserId == id)
@@ -41,21 +35,7 @@ namespace Persistence.Repositories
 
             return new User();
         }
-
-        public async Task<List<User>> GetUsersAsync()
-        {
-            return await _context.Users.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<List<User>> GetByPageAsync(int page, int pageSize)
-        {
-            return await _context.Users
-                .AsNoTracking()
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
-
+        
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

@@ -1,6 +1,5 @@
-using API.DTOs;
+using Application.DTOs;
 using Application.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -14,15 +13,7 @@ namespace API.Controllers
         {
             _usersService = usersService;
         }
-        
-        [HttpPost("register")]
-        public async Task <IActionResult> Register([FromBody] RegisterDto registerDto)
-        {
-            await _usersService.Register(registerDto.Name, registerDto.Login);
 
-            return Ok();
-        }
-        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto login)
         {

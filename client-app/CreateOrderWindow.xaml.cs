@@ -1,16 +1,10 @@
-﻿using System;
+﻿using client_app.DTOs;
+using client_app.OrderSection;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace client_app
 {
@@ -19,18 +13,104 @@ namespace client_app
     /// </summary>
     public partial class CreateOrderWindow : Window
     {
+        private IOrderService _orderService;
         private string _userId;
+
+        public ObservableCollection<ProductToUserDto> _products;
+
         public CreateOrderWindow(string userId)
         {
             InitializeComponent();
             _userId = userId;
+            _products = new ObservableCollection<ProductToUserDto>();
+            dataGrid.ItemsSource = _products;
+            _orderService = new OrderService();
         }
 
         private void BackToMainWindow(object sender, RoutedEventArgs e)
         {
+            ProductsAdditionWindow.GetInstance(_userId, _products).Close();
+
             MainWindow window = new MainWindow(_userId);
+
             Close();
+
             window.Show();
+        }
+
+        private void MoveToProductsAdditionWindow(object sender, RoutedEventArgs e)
+        {
+            ProductsAdditionWindow.GetInstance(_userId, _products).Show();
+        }
+
+        private async void CreateOrder(object sender, RoutedEventArgs e)
+        {
+            decimal priceOrder = 0;
+
+            var products = new List<ProductNameDto>();
+
+            if(dataGrid.Items.Count > 1)
+            {
+                foreach (var row in dataGrid.Items)
+                {
+                    if (row is ProductToUserDto)
+                    {
+                        ProductToUserDto product = (ProductToUserDto)row;
+
+                        priceOrder += product.Count * product.Price;
+
+                        var positionOrder = new ProductNameDto
+                        {
+                            Name = product.Name,
+                            Count = product.Count
+                        };
+
+                        products.Add(positionOrder);
+                    }    
+                }
+
+                await _orderService.CreateOrder(_userId, priceOrder, products);
+
+                _products.Clear();
+
+                MessageBox.Show("Заказ успешно создан");
+            }
+            else
+            {
+                MessageBox.Show("Список товаров пуст!");
+            }
+        }
+
+        private void Row_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                DataGridRow row = sender as DataGridRow;
+                row?.Focus();
+                e.Handled = true;
+
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItemDelete = new MenuItem();
+
+                menuItemDelete.Header = "Удалить";
+
+                menuItemDelete.Click += (s, args) =>
+                {
+                    if (row.Item is ProductToUserDto)
+                    {
+                        ProductToUserDto selectedProduct = (ProductToUserDto)row.Item;
+
+                        if (selectedProduct != null)
+                        {
+                            _products.Remove(selectedProduct);
+                        }
+                    }
+                };
+
+                contextMenu.Items.Add(menuItemDelete);
+
+                row.ContextMenu = contextMenu;
+            }
         }
     }
 }
