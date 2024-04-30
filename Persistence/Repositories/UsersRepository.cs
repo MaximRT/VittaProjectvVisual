@@ -17,6 +17,16 @@ namespace Persistence.Repositories
         }
 
         /// <summary>
+        /// Тестовый метод
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> IsFalse()
+        {
+            return false;
+        }
+
+
+        /// <summary>
         /// Получение списка заказов пользователя
         /// </summary>
         /// <param name="id"> Идентификатор пользователя </param>
